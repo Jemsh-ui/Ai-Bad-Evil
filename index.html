@@ -1,173 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bad Evil</title>
-    <style>
-        body {
-            background: url('background.jpg') no-repeat center center fixed; /* Your background image */
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            color: #90D5FF; /* Light blue text */
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
+  <title>BAD EVIL LOGIN</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #181818; /* Dark Gray Background */
+    }
 
-        .container {
-            margin-top: 50px;
-            padding: 20px;
-            border: 3px solid #90D5FF; /* Light blue Neon Border */
-            border-radius: 15px;
-            box-shadow: 0 0 15px #90D5FF, 0 0 30px #90D5FF, 0 0 45px #90D5FF; /* Light blue glow */
-            display: inline-block;
-            background: rgba(0, 0, 0, 0.8); /* Background transparency */
-            max-width: 90%;
-        }
+    .container {
+      background-color: #282828; /* Darker Gray Container */
+      padding: 40px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      text-align: center; /* Centered text within the container */
+    }
 
-        img.logo {
-            max-width: 200px;
-            margin-bottom: 20px;
-        }
+    .running-text {
+      color: #FF0000; /* Red Text */
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-bottom: 20px;
+      animation: marquee 5s linear infinite;
+    }
 
-        .form-group {
-            margin: 20px 0;
-            display: none; /* Hide the form group initially */
-        }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
 
-        select, button {
-            padding: 15px;
-            font-size: 1.2em;
-            margin: 10px 0;
-            width: 80%;
-            max-width: 300px;
-            border: 2px solid #90D5FF; /* Light blue Neon Border */
-            border-radius: 10px;
-            box-shadow: 0 0 10px #90D5FF; /* Light blue glow */
-        }
+    label {
+      color: #fff; /* White Text */
+      display: block;
+      margin-bottom: 5px;
+    }
 
-        select {
-            background-color: #333;
-            color: #fff; /* White text for select */
-        }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #444; /* Dark Gray Border */
+      border-radius: 3px;
+      background-color: #383838; /* Darker Gray Background */
+      color: #fff; /* White Text */
+    }
 
-        button {
-            background-color: #90D5FF; /* Light blue button background */
-            color: #000; /* Black button text */
-            cursor: pointer;
-            transition: box-shadow 0.3s ease;
-        }
+    button {
+      background-color: #FF0000; /* Red Button */
+      color: #fff; /* White Text */
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      display: block; /* Make button a block element */
+      margin: 0 auto; /* Center the button horizontally */
+    }
 
-        button:hover {
-            box-shadow: 0 0 15px #90D5FF, 0 0 30px #90D5FF;
-        }
+    .textview {
+      color: #fff; /* White Text */
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        .loading {
-            display: none;
-            margin-top: 20px;
-            font-size: 1.5em;
-            color: #90D5FF; /* Light blue loading text */
-        }
-
-        .typed-text {
-            font-size: 2em;
-            text-shadow: 0 0 5px #90D5FF, 0 0 10px #90D5FF, 0 0 20px #90D5FF, 0 0 40px #90D5FF; /* Light blue glow */
-        }
-
-        h2#versionText {
-            font-size: 1.5em;
-            text-shadow: 0 0 5px #90D5FF, 0 0 10px #90D5FF, 0 0 20px #90D5FF, 0 0 40px #90D5FF; /* Light blue glow */
-        }
-
-        @media screen and (max-width: 600px) {
-            .container {
-                width: 90%; /* Ensure container fits the screen */
-                padding: 10px;
-            }
-
-            select, button {
-                font-size: 1em;
-                width: 100%; /* Full width for mobile */
-            }
-
-            img.logo {
-                max-width: 150px;
-            }
-        }
-    </style>
+    .custom-alert {
+      position: fixed; /* Position the alert absolutely */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* Center the alert */
+      background-color: #333; /* Dark Gray Background for Alert */
+      color: #fff; /* White Text */
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      z-index: 9999; /* Ensure alert appears on top */
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div class="running-text">Welcome To Bad Evil Login Page</div>
 
-<div class="container">
-    <div id="typedText" class="typed-text"></div>
-    <h2 id="versionText">Made By Bad Evil</h2>
+    <div class="textview">BAD EVIL LOGIN PAGE</div> 
 
-    <div class="form-group" id="serverSelectGroup">
-        <label for="serverSelect">Select Server</label>
-        <select id="serverSelect" aria-label="Select Server">
-            <option value="server1">Server 1</option>
-            <option value="server2">Server 2</option>
-            <option value="server3">Server 3</option>
-            <option value="Bad Evil Server">Bad Evil Ai Server</option>
-            <option value="Fuck Ai server">Bad Evil Fuck Ai server</option>
-        </select>
-    </div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter Username" required>
 
-    <div class="form-group" id="gameSelectGroup">
-        <label for="gameSelect">Select Game</label>
-        <select id="gameSelect" aria-label="Select Game">
-            <option value="99club">91 Club</option>
-            <option value="tiranga">Tiranga</option>
-            <option value="okwin">Okwin</option>
-            <option value="55club">55 Club</option>
-            <option value="51 game">51 Game</option>
-            <option value="bdgwin">BDG Win</option>
-        </select>
-    </div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter Password" required>
 
-    <div class="form-group" id="checkButtonGroup">
-        <button onclick="seeResult()">Check</button>
-    </div>
-    
-    <div class="loading" id="loading">Loading...</div>
-</div>
+    <button type="submit" onclick="return validateForm()">LOGIN</button>
+  </div>
 
-<script>
-    // Typing effect function
-    function typeText(text, element, delay) {
-        let index = 0;
-        const interval = setInterval(() => {
-            if (index < text.length) {
-                element.innerHTML += text.charAt(index);
-                index++;
-            } else {
-                clearInterval(interval);
-                document.getElementById('serverSelectGroup').style.display = 'block';
-                document.getElementById('gameSelectGroup').style.display = 'block';
-                document.getElementById('checkButtonGroup').style.display = 'block';
-            }
-        }, delay);
-    }
+  <script>
+    function validateForm() {
+      let username = document.getElementById("username").value;
+      let password = document.getElementById("password").value;
 
-    window.onload = function() {
-        const typedText = document.getElementById('typedText');
-        typeText("Welcome Back To Bad Evil", typedText, 100); // Adjust delay for typing speed
-    };
+      if (username === "BADEVILFUKCER" && password === "BADAIFUCKER") { 
+        window.location.href = "fucker.html"; // Redirect to success.html
+        return true; 
+      } else {
+        // Create a custom alert dialog
+        let alertDiv = document.createElement("div");
+        alertDiv.classList.add("custom-alert");
+        alertDiv.textContent = "Invalid username or password.";
 
-    function seeResult() {
-        const selectedServer = document.getElementById('serverSelect').value;
-        const selectedGame = document.getElementById('gameSelect').value;
-        const loading = document.getElementById('loading');
-        
-        loading.style.display = 'block'; // Show loading
+        // Append the alert to the body
+        document.body.appendChild(alertDiv);
 
-        // Simulate a delay for loading
+        // Remove alert after a short delay (e.g., 2 seconds)
         setTimeout(() => {
-            window.location.href = `Evilv1.html?server=${selectedServer}&game=${selectedGame}`;
-        }, 1000);
-    }
-</script>
+          alertDiv.remove();
+        }, 2000);
 
+        return false;
+      }
+    }
+  </script>
 </body>
 </html>
