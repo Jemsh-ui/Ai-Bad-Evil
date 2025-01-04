@@ -1,180 +1,162 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bad Evil V1.1</title>
+    <title>Bad Evil V1.2</title>
     <style>
         body {
             font-family: sans-serif;
+            background-color: #181818; /* Dark Grey background */
+            color: #fff; /* Text color to white */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
         }
 
-        #game-container {
-            background-color: #fff;
-            border-radius: 10px;
+        .container {
+            background-color: #282828; /* Slightly lighter grey for container */
             padding: 30px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
+            width: 350px; /* Increased width for better readability */
         }
 
-        #result, #hack-records {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #666;
+        h1 {
+            color: #fff; /* White heading color */
+            margin-bottom: 20px;
         }
 
-        #clear-history-button, #telegram-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #444; /* Darker border */
+            border-radius: 3px;
+            background-color: #383838; /* Slightly lighter input background */
+            color: #fff; /* White input text */
+            font-size: 16px; /* Slightly larger font size */
         }
 
-        #game-history {
-            margin-top: 20px;
-        }
-
-        #game-history-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        #game-history-list li {
-            margin-bottom: 5px;
-        }
-
-        /* Dialog Styling */
-        #dialog {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        #dialog p {
-            margin-bottom: 10px;
-        }
-
-        #close-dialog {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px 15px;
-            border: none;
+        button {
+            padding: 12px 25px;
+            margin: 5px;
             border-radius: 3px;
             cursor: pointer;
+            font-size: 16px; /* Slightly larger font size */
         }
 
-        /* Timer Styling */
-        #timer-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
+        #predictButton {
+            background-color: #4CAF50; /* Green */
+            color: #fff;
+            border: none;
         }
 
-        #period-element, #timer-element {
-            font-size: 18px;
+        #telegramButton {
+            background-color: #0088cc; /* Blue */
+            color: #fff;
+            border: none;
+        }
+
+        #clearHistoryButton { 
+            background-color: #e74c3c; /* Red */
+            color: #fff;
+            border: none;
+        }
+
+        #result {
+            margin-top: 20px;
             font-weight: bold;
+            font-size: 18px; /* Larger result font size */
+            color: #fff; /* White result color */
+        }
+
+        #history {
+            margin-top: 20px;
+            max-height: 200px; /* Set a maximum height for better scrolling */
+            overflow-y: auto; /* Add scrollbar if history exceeds height */
+            color: #fff; /* White history text */
+        }
+
+        .history-item {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 3px;
+            font-size: 14px; /* Slightly smaller font size for history items */
         }
     </style>
 </head>
 <body>
-
-    <div id="game-container">
-        <div id="timer-container">
-            <span id="period1m">Initializing...</span>
-            <span id="timer1m">00:00</span> 
+    <div class="container">
+        <h1>Bad Evil V1.2</h1>
+        <input type="number" id="myInput" placeholder="Enter Period (3 Digits)" min="0" max="999" oninput="this.value = this.value.slice(0, 3);"> 
+        <div class="button-group">
+            <button id="predictButton" onclick="predict()">Predict</button>
+            <button id="telegramButton" onclick="openTelegram()">Telegram</button> 
+            <button id="clearHistoryButton" onclick="clearHistory()">Clear History</button> 
         </div>
-        <div id="result"></div> 
-        <button id="clear-history-button">Clear History</button>
-        <a id="telegram-button" href="https://t.me/badEvilMods" target="_blank">Telegram</a> 
-        <div id="game-history">
-            <h3>Game History</h3>
-            <ul id="game-history-list"></ul>
-        </div>
-    </div>
-
-    <div id="dialog">
-        <p>Please enter a game code.</p>
-        <button id="close-dialog">Close</button>
+        <div id="result"></div>
+        <div id="history"></div>
     </div>
 
     <script>
-        var gameHistory = [];
-        var lastPeriod = null;
-        var lastResult = "UNKNOWN"; 
+        let previousResult = "";
+        let previousInput = ""; 
 
-        function updatePeriodAndTimer() {
-            const now = new Date();
-            const seconds = now.getUTCSeconds();
-            const remainingSeconds = 60 - seconds;
-            const minutes = now.getUTCMinutes();
-            const totalMinutes = now.getUTCHours() * 60 + minutes;
+        function predict() {
+            var inputText = document.getElementById("myInput").value;
 
-            const periodElement = document.getElementById("period1m");
-            const periodNumber = `${now.getUTCFullYear()}${(now.getUTCMonth() + 1)
-                .toString()
-                .padStart(2, "0")}${now.getUTCDate().toString().padStart(2, "0")}1000${(
-                10001 + totalMinutes
-            ).toString()}`;
-            periodElement.textContent = periodNumber;
-
-            const timerElement = document.getElementById("timer1m");
-            timerElement.textContent = `00:${remainingSeconds
-                .toString()
-                .padStart(2, "0")}`;
-
-            if (remainingSeconds === 60) {
-                displayResult(periodNumber); 
+            if (inputText === "") {
+                // Display an error message (optional)
+                document.getElementById("result").innerHTML = "Please enter a value.";
+                return; 
             }
-        }
 
-        function displayResult(currentPeriod) {
-            if (currentPeriod === lastPeriod) {
-                result = lastResult;
+            // Check for input change
+            if (inputText === previousInput) {
+                return; // Skip update if input hasn't changed
+            }
+
+            previousInput = inputText; // Update previous input
+
+            // Simple prediction logic (replace with your desired algorithm)
+            var prediction;
+            if (inputText % 2 === 0) { 
+                prediction = "Big"; 
             } else {
-                result = Math.random() < 0.5 ? "SMALL" : "BIG";
-                lastPeriod = currentPeriod;
-                lastResult = result;
+                prediction = "Small"; 
             }
 
-            document.getElementById("result").textContent = "Result: " + result;
+            if (prediction !== previousResult) {
+                document.getElementById("result").innerHTML = prediction;
+                previousResult = prediction;
+            }
 
-            gameHistory.push({ "period": currentPeriod, "result": result }); 
-
-            var historyList = document.getElementById("game-history-list");
-            historyList.innerHTML = ""; 
-            gameHistory.forEach(function(entry) {
-                var listItem = document.createElement("li");
-                listItem.textContent = "Period: " + entry.period + " - Result: " + entry.result;
-                historyList.appendChild(listItem);
-            });
+            // Add history entry (including input text)
+            var historyItem = document.createElement("div");
+            historyItem.classList.add("history-item");
+            historyItem.style.backgroundColor = getRandomColor();
+            historyItem.textContent = inputText + " - " + prediction; 
+            document.getElementById("history").appendChild(historyItem);
         }
 
-        setInterval(updatePeriodAndTimer, 1000);
-        updatePeriodAndTimer();
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
 
-        document.getElementById("clear-history-button").addEventListener("click", function() {
-            gameHistory = []; 
-            document.getElementById("game-history-list").innerHTML = ""; 
-        });
+        function openTelegram() {
+            window.open("https://t.me/badevilmods", "_blank"); 
+        }
 
-        document.getElementById("telegram-button").addEventListener("click", function() {
-            // ... (previous button click handling) ...
-        });
-
+        function clearHistory() {
+            document.getElementById("history").innerHTML = ""; 
+        }
     </script>
-
 </body>
 </html>
