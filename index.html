@@ -3,196 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bad Evil V1.3</title>
+    <title>Bad Evil v1.3</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Courier New', monospace;
-            overflow: hidden;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background: linear-gradient(to right, #74ebd5, #9face6);
+            color: #333;
         }
-
-        .background {
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .dropdown-btn {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+            color: #333;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .dropdown-btn:hover {
+            border-color: #007BFF;
+            background: #f8f8f8;
+        }
+        .dropdown-list {
             position: absolute;
-            top: 0;
+            top: 100%;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: black;
-            overflow: hidden;
-        }
-
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
-            animation: moveCircle 8s linear infinite;
-        }
-
-        @keyframes moveCircle {
-            0% {
-                transform: scale(0) translate(-50%, -50%);
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: scale(5) translate(-50%, -50%);
-                opacity: 0;
-            }
-        }
-
-        .container {
-            position: relative;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
             z-index: 10;
-            text-align: center;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #ff0000;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000 inset;
-            animation: pulse 2s infinite;
-            width: 90%;
-            max-width: 400px;
-            margin: auto;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
         }
-
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000 inset;
-            }
-            50% {
-                box-shadow: 0 0 30px #ff4500, 0 0 60px #ff4500 inset;
-            }
+        .dropdown-list.show {
+            display: block;
         }
-
-        .container h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500;
-        }
-
-        .input-field {
-            width: 90%;
-            padding: 15px;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            border: 2px solid #ff0000;
-            border-radius: 5px;
-            background: #000;
-            color: #fff;
-            text-align: center;
-            outline: none;
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
-
-        .input-field:focus {
-            box-shadow: 0 0 20px #ff4500;
-            transform: scale(1.05);
-        }
-
-        .submit-button {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 2px solid #ff0000;
-            border-radius: 5px;
-            background: linear-gradient(to right, #ff0000, #800000);
-            color: #fff;
+        .dropdown-item {
+            padding: 10px 15px;
+            font-size: 14px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            transition: all 0.2s ease;
         }
-
-        .submit-button:hover {
-            background: linear-gradient(to right, #ff4500, #b30000);
-            transform: translateY(-3px);
-            box-shadow: 0 0 15px #ff4500;
+        .dropdown-item:hover {
+            background: #007BFF;
+            color: #fff;
         }
-
-        .danger-message {
+        input, button {
             margin-top: 20px;
-            font-size: 1rem;
-            color: #ff4500;
-            animation: flicker 1.5s infinite alternate;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-
-        @keyframes flicker {
-            0% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                opacity: 1;
-            }
+        button {
+            background: #007BFF;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+        #history {
+            margin-top: 30px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 30px auto;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+        #history ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            text-align: center;
+        }
+        .dialog button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .dialog button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="background">
-        <!-- Randomly generated circles -->
+    <h1>Bad Evil v1.3</h1>
+
+    <!-- Dropdown for Server Selection -->
+    <div class="dropdown">
+        <div class="dropdown-btn" onclick="toggleDropdown('serverDropdown')">Select Server</div>
+        <div class="dropdown-list" id="serverDropdown">
+            <div class="dropdown-item" onclick="selectServer('Server 1')">Server 1</div>
+            <div class="dropdown-item" onclick="selectServer('Server 2')">Server 2</div>
+            <div class="dropdown-item" onclick="selectServer('Server 3')">Server 3</div>
+        </div>
     </div>
-    <div class="container">
-        <h1>Bad Evil V1.3 Login</h1>
-        <input type="password" class="input-field" id="keyInput" placeholder="Enter Secret Key">
-        <button class="submit-button" onclick="validateKey()">Access</button>
-        <p class="danger-message">Unauthorized access will be logged!</p>
-        <p id="errorMessage" class="error"></p>
+
+    <!-- Dropdown for Game Selection -->
+    <div class="dropdown">
+        <div class="dropdown-btn" onclick="toggleDropdown('gameDropdown')">Select Game</div>
+        <div class="dropdown-list" id="gameDropdown">
+            <div class="dropdown-item" onclick="selectGame('91 Club')">91 Club</div>
+            <div class="dropdown-item" onclick="selectGame('82 Lottery')">82 Lottery</div>
+            <div class="dropdown-item" onclick="selectGame('51 Game')">51 Game</div>
+            <div class="dropdown-item" onclick="selectGame('Goa Game')">Goa Game</div>
+            <div class="dropdown-item" onclick="selectGame('Ok Win')">Ok Win</div>
+            <div class="dropdown-item" onclick="selectGame('Bdg Win')">Bdg Win</div>
+            <div class="dropdown-item" onclick="selectGame('55 Club')">55 Club</div>
+        </div>
+    </div>
+
+    <!-- Input Field with type number and 3-digit limit -->
+    <input type="number" id="userInput" placeholder="Enter number here" min="0" oninput="limitInput()" />
+    <br>
+
+    <!-- Buttons -->
+    <button onclick="showResult()">Show Result</button>
+    <button onclick="clearHistory()">Clear History</button>
+    <button onclick="goToTelegram()">Telegram</button>
+
+    <!-- Result Display -->
+    <div id="result"></div>
+
+    <!-- History Section -->
+    <div id="history">
+        <h3>History</h3>
+        <ul id="historyList"></ul>
+    </div>
+
+    <!-- Dialog for server or game selection or empty input -->
+    <div id="dialog" class="dialog">
+        <p id="dialogMessage"></p>
+        <button onclick="closeDialog()">Close</button>
     </div>
 
     <script>
-        // Generate moving circles
-        const background = document.querySelector('.background');
+        let selectedServer = "None";
+        let selectedGame = "None";
+        let lastResult = ""; // Variable to store the last result
 
-        function createCircle() {
-            const circle = document.createElement('div');
-            circle.classList.add('circle');
-
-            const size = Math.random() * 100 + 50; // Random size
-            const x = Math.random() * 100; // Random position
-            const y = Math.random() * 100; // Random position
-
-            circle.style.width = `${size}px`;
-            circle.style.height = `${size}px`;
-            circle.style.top = `${y}%`;
-            circle.style.left = `${x}%`;
-
-            background.appendChild(circle);
-
-            // Remove circle after animation
-            setTimeout(() => {
-                circle.remove();
-            }, 8000);
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('show');
         }
 
-        setInterval(createCircle, 1000);
+        function selectServer(server) {
+            selectedServer = server;
+            document.querySelector('.dropdown:nth-of-type(1) .dropdown-btn').textContent = server;
+            toggleDropdown('serverDropdown'); // Close dropdown after selection
+        }
 
-        // Correct Key
-        const correctKey = "BADEVILAIONENUMBER";
+        function selectGame(game) {
+            selectedGame = game;
+            document.querySelector('.dropdown:nth-of-type(2) .dropdown-btn').textContent = game;
+            toggleDropdown('gameDropdown'); // Close dropdown after selection
+        }
 
-        // Function to validate key
-        function validateKey() {
-            const userKey = document.getElementById("keyInput").value;
-            const errorMessage = document.getElementById("errorMessage");
-
-            if (userKey === correctKey) {
-                // Redirect to another page
-                window.location.href = "Evilv1.html"; // Replace with your desired page
-            } else {
-                errorMessage.textContent = "Invalid Key! Access Denied!";
+        function limitInput() {
+            const inputField = document.getElementById('userInput');
+            let value = inputField.value;
+            // Restrict to 3 digits maximum
+            if (value.length > 3) {
+                inputField.value = value.slice(0, 3);
             }
         }
+
+        function showResult() {
+            const inputField = document.getElementById('userInput');
+            const userInput = inputField.value.trim();
+
+            // Check if server or game is selected
+            if (selectedServer === "None") {
+                showDialog("Please select a server to proceed.");
+                return;
+            }
+            if (selectedGame === "None") {
+                showDialog("Please select a game to proceed.");
+                return;
+            }
+
+            // Check if input is empty
+            if (userInput === "") {
+                showDialog("Please enter a valid number.");
+                return;
+            }
+
+            const resultDiv = document.getElementById('result');
+            const historyList = document.getElementById('historyList');
+
+            // Check if input has changed
+            if (userInput !== lastResult) {
+                // Calculate Big/Small result based on input
+                const result = Math.random() > 0.5 ? 'Big' : 'Small';
+                resultDiv.textContent = `Server: ${selectedServer}, Game: ${selectedGame}, Result: ${result}`;
+                lastResult = userInput; // Store the current input as the last result
+
+                const newHistoryItem = document.createElement('li');
+                newHistoryItem.textContent = `Server: ${selectedServer}, Game: ${selectedGame}, Input: ${userInput}, Result: ${result}`;
+                historyList.appendChild(newHistoryItem);
+            } else {
+                resultDiv.textContent = `Server: ${selectedServer}, Game: ${selectedGame}, Result: ${lastResult === "" ? "Big" : "Small"}`;
+            }
+
+            inputField.value = ""; // Clear input after showing result
+        }
+
+        function clearHistory() {
+            document.getElementById('historyList').innerHTML = "";
+        }
+
+        function goToTelegram() {
+            window.location.href = "https://t.me/BADevilMods";
+        }
+
+        // Show dialog with dynamic message
+        function showDialog(message) {
+            document.getElementById('dialogMessage').textContent = message;
+            document.getElementById('dialog').style.display = 'block';
+        }
+
+        // Close dialog
+        function closeDialog() {
+            document.getElementById('dialog').style.display = 'none';
+        }
+
+        // Close dropdown if clicked outside
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropdown-btn')) {
+                const dropdowns = document.getElementsByClassName("dropdown-list");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    if (dropdowns[i].classList.contains('show')) {
+                        dropdowns[i].classList.remove('show');
+                    }
+                }
+            }
+        };
     </script>
 </body>
 </html>
