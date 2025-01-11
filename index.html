@@ -1,128 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>BAD EVIL LOGIN</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #181818; /* Dark Gray Background */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bad Evil V1.3</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            height: 100vh;
+        }
 
-    .container {
-      background-color: #282828; /* Darker Gray Container */
-      padding: 40px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      text-align: center; /* Centered text within the container */
-    }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            overflow: hidden;
+        }
 
-    .running-text {
-      color: #FF0000; /* Red Text */
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      margin-bottom: 20px;
-      animation: marquee 5s linear infinite;
-    }
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent);
+            animation: moveCircle 8s linear infinite;
+        }
 
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
+        @keyframes moveCircle {
+            0% {
+                transform: scale(0) translate(-50%, -50%);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(5) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
 
-    label {
-      color: #fff; /* White Text */
-      display: block;
-      margin-bottom: 5px;
-    }
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000 inset;
+            animation: pulse 2s infinite;
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+        }
 
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #444; /* Dark Gray Border */
-      border-radius: 3px;
-      background-color: #383838; /* Darker Gray Background */
-      color: #fff; /* White Text */
-    }
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000 inset;
+            }
+            50% {
+                box-shadow: 0 0 30px #ff4500, 0 0 60px #ff4500 inset;
+            }
+        }
 
-    button {
-      background-color: #FF0000; /* Red Button */
-      color: #fff; /* White Text */
-      padding: 10px 20px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      display: block; /* Make button a block element */
-      margin: 0 auto; /* Center the button horizontally */
-    }
+        .container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500;
+        }
 
-    .textview {
-      color: #fff; /* White Text */
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        .input-field {
+            width: 90%;
+            padding: 15px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            background: #000;
+            color: #fff;
+            text-align: center;
+            outline: none;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
 
-    .custom-alert {
-      position: fixed; /* Position the alert absolutely */
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); /* Center the alert */
-      background-color: #333; /* Dark Gray Background for Alert */
-      color: #fff; /* White Text */
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      z-index: 9999; /* Ensure alert appears on top */
-    }
-  </style>
+        .input-field:focus {
+            box-shadow: 0 0 20px #ff4500;
+            transform: scale(1.05);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            background: linear-gradient(to right, #ff0000, #800000);
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(to right, #ff4500, #b30000);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px #ff4500;
+        }
+
+        .danger-message {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #ff4500;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="running-text">Welcome To Bad Evil Login Page</div>
+    <div class="background">
+        <!-- Randomly generated circles -->
+    </div>
+    <div class="container">
+        <h1>Bad Evil V1.3 Login</h1>
+        <input type="password" class="input-field" id="keyInput" placeholder="Enter Secret Key">
+        <button class="submit-button" onclick="validateKey()">Access</button>
+        <p class="danger-message">Unauthorized access will be logged!</p>
+        <p id="errorMessage" class="error"></p>
+    </div>
 
-    <div class="textview">BAD EVIL LOGIN PAGE</div> 
+    <script>
+        // Generate moving circles
+        const background = document.querySelector('.background');
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" placeholder="Enter Username" required>
+        function createCircle() {
+            const circle = document.createElement('div');
+            circle.classList.add('circle');
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" placeholder="Enter Password" required>
+            const size = Math.random() * 100 + 50; // Random size
+            const x = Math.random() * 100; // Random position
+            const y = Math.random() * 100; // Random position
 
-    <button type="submit" onclick="return validateForm()">LOGIN</button>
-  </div>
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            circle.style.top = `${y}%`;
+            circle.style.left = `${x}%`;
 
-  <script>
-    function validateForm() {
-      let username = document.getElementById("username").value;
-      let password = document.getElementById("password").value;
+            background.appendChild(circle);
 
-      if (username === "BADEVILFUKCER" && password === "BADAIFUCKER") { 
-        window.location.href = "fucker.html"; // Redirect to success.html
-        return true; 
-      } else {
-        // Create a custom alert dialog
-        let alertDiv = document.createElement("div");
-        alertDiv.classList.add("custom-alert");
-        alertDiv.textContent = "Invalid username or password.";
+            // Remove circle after animation
+            setTimeout(() => {
+                circle.remove();
+            }, 8000);
+        }
 
-        // Append the alert to the body
-        document.body.appendChild(alertDiv);
+        setInterval(createCircle, 1000);
 
-        // Remove alert after a short delay (e.g., 2 seconds)
-        setTimeout(() => {
-          alertDiv.remove();
-        }, 2000);
+        // Correct Key
+        const correctKey = "BADEVILAIONENUMBER";
 
-        return false;
-      }
-    }
-  </script>
+        // Function to validate key
+        function validateKey() {
+            const userKey = document.getElementById("keyInput").value;
+            const errorMessage = document.getElementById("errorMessage");
+
+            if (userKey === correctKey) {
+                // Redirect to another page
+                window.location.href = "EvilV1.html"; // Replace with your desired page
+            } else {
+                errorMessage.textContent = "Invalid Key! Access Denied!";
+            }
+        }
+    </script>
 </body>
 </html>
