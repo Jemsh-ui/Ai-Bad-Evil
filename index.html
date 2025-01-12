@@ -3,283 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bad Evil v1.3</title>
+    <title>MODX APNA GHAND DEDE </title>
     <style>
+        /* General styling */
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background: linear-gradient(to right, #74ebd5, #9face6);
-            color: #333;
+            background-color: #1a1a2e;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        h1 {
-            font-size: 30px;
-            margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            width: 200px;
-            margin-bottom: 20px;
-        }
-        .dropdown-btn {
-            width: 100%;
-            padding: 10px 15px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background: #fff;
-            color: #333;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .dropdown-btn:hover {
-            border-color: #007BFF;
-            background: #f8f8f8;
-        }
-        .dropdown-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 10;
-        }
-        .dropdown-list.show {
-            display: block;
-        }
-        .dropdown-item {
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .dropdown-item:hover {
-            background: #007BFF;
-            color: #fff;
-        }
-        input, button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button {
-            background: #007BFF;
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background: #0056b3;
-            transform: scale(1.1);
-        }
-        #result {
-            font-size: 18px;
-            margin-top: 20px;
-            font-weight: bold;
-            color: #fff;
-        }
-        #history {
-            margin-top: 30px;
-            padding: 15px;
-            background: #fff;
-            border-radius: 8px;
-            max-width: 400px;
-            margin: 30px auto;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            text-align: left;
-        }
-        #history ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .dialog {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
+
+        /* Container styling */
+        .container {
+            width: 420px;
             padding: 20px;
-            border: 2px solid #333;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 20;
+            background: #0247FE;
+            border-radius: 15px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
-        .dialog button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
+
+        /* Header styling */
+        h1 {
+            color: #ff0000;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
         }
-        .dialog button:hover {
-            background-color: #0056b3;
+
+        /* Box styling */
+        .box {
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(145deg, #D891EF, #1a1a2b);
+            border-radius: 12px;
+            border: 3px solid #0000ff;
+            color: #ff0000;
+        }
+
+        /* Period and result text */
+        #periodNumber, #currentResult {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Timer text */
+        #timer {
+            font-size: 1.3em;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+        }
+
+        /* History box */
+        .history-box {
+            background: #1a1a2e;
+            border: 4px solid #66FF00;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #F4BBFF;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 3px solid #66FF00;
+            padding: 8px;
+            text-align: center;
+        }
+
+        /* Button styling */
+        .get-result-btn {
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .telegram-btn {
+            padding: 10px 20px;
+            background-color: #0088cc;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Popup styling */
+        .popup-message {
+            display: none;
+            font-size: 1.1em;
+            color: #66FF00;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <h1>Bad Evil v1.3</h1>
 
-    <!-- Dropdown for Server Selection -->
-    <div class="dropdown">
-        <div class="dropdown-btn" onclick="toggleDropdown('serverDropdown')">Select Server</div>
-        <div class="dropdown-list" id="serverDropdown">
-            <div class="dropdown-item" onclick="selectServer('Server 1')">Server 1</div>
-            <div class="dropdown-item" onclick="selectServer('Server 2')">Server 2</div>
-            <div class="dropdown-item" onclick="selectServer('Server 3')">Server 3</div>
-        </div>
-    </div>
+<div class="container">
 
-    <!-- Dropdown for Game Selection -->
-    <div class="dropdown">
-        <div class="dropdown-btn" onclick="toggleDropdown('gameDropdown')">Select Game</div>
-        <div class="dropdown-list" id="gameDropdown">
-            <div class="dropdown-item" onclick="selectGame('91 Club')">91 Club</div>
-            <div class="dropdown-item" onclick="selectGame('82 Lottery')">82 Lottery</div>
-            <div class="dropdown-item" onclick="selectGame('51 Game')">51 Game</div>
-            <div class="dropdown-item" onclick="selectGame('Goa Game')">Goa Game</div>
-            <div class="dropdown-item" onclick="selectGame('Ok Win')">Ok Win</div>
-            <div class="dropdown-item" onclick="selectGame('Bdg Win')">Bdg Win</div>
-            <div class="dropdown-item" onclick="selectGame('55 Club')">55 Club</div>
-        </div>
-    </div>
+    <a href="https://t.me/badevilmods" target="_blank">
+        <button class="telegram-btn">IDHAR CLICK KARO MOD X KA GHADN MIL RAHA HAI</button>
+    </a>
+</div>
 
-    <!-- Input Field with type number and 3-digit limit -->
-    <input type="number" id="userInput" placeholder="Enter number here" min="0" oninput="limitInput()" />
-    <br>
+</script>
 
-    <!-- Buttons -->
-    <button onclick="showResult()">Show Result</button>
-    <button onclick="clearHistory()">Clear History</button>
-    <button onclick="goToTelegram()">Telegram</button>
-
-    <!-- Result Display -->
-    <div id="result"></div>
-
-    <!-- History Section -->
-    <div id="history">
-        <h3>History</h3>
-        <ul id="historyList"></ul>
-    </div>
-
-    <!-- Dialog for server or game selection or empty input -->
-    <div id="dialog" class="dialog">
-        <p id="dialogMessage"></p>
-        <button onclick="closeDialog()">Close</button>
-    </div>
-
-    <script>
-        let selectedServer = "None";
-        let selectedGame = "None";
-        let lastResult = ""; // Variable to store the last result
-
-        function toggleDropdown(id) {
-            const dropdown = document.getElementById(id);
-            dropdown.classList.toggle('show');
-        }
-
-        function selectServer(server) {
-            selectedServer = server;
-            document.querySelector('.dropdown:nth-of-type(1) .dropdown-btn').textContent = server;
-            toggleDropdown('serverDropdown'); // Close dropdown after selection
-        }
-
-        function selectGame(game) {
-            selectedGame = game;
-            document.querySelector('.dropdown:nth-of-type(2) .dropdown-btn').textContent = game;
-            toggleDropdown('gameDropdown'); // Close dropdown after selection
-        }
-
-        function limitInput() {
-            const inputField = document.getElementById('userInput');
-            let value = inputField.value;
-            // Restrict to 3 digits maximum
-            if (value.length > 3) {
-                inputField.value = value.slice(0, 3);
-            }
-        }
-
-        function showResult() {
-            const inputField = document.getElementById('userInput');
-            const userInput = inputField.value.trim();
-
-            // Check if server or game is selected
-            if (selectedServer === "None") {
-                showDialog("Please select a server to proceed.");
-                return;
-            }
-            if (selectedGame === "None") {
-                showDialog("Please select a game to proceed.");
-                return;
-            }
-
-            // Check if input is empty
-            if (userInput === "") {
-                showDialog("Please enter a valid number.");
-                return;
-            }
-
-            const resultDiv = document.getElementById('result');
-            const historyList = document.getElementById('historyList');
-
-            // Check if input has changed
-            if (userInput !== lastResult) {
-                // Calculate Big/Small result based on input
-                const result = Math.random() > 0.5 ? 'Big' : 'Small';
-                resultDiv.textContent = `Server: ${selectedServer}, Game: ${selectedGame}, Result: ${result}`;
-                lastResult = userInput; // Store the current input as the last result
-
-                const newHistoryItem = document.createElement('li');
-                newHistoryItem.textContent = `Server: ${selectedServer}, Game: ${selectedGame}, Input: ${userInput}, Result: ${result}`;
-                historyList.appendChild(newHistoryItem);
-            } else {
-                resultDiv.textContent = `Server: ${selectedServer}, Game: ${selectedGame}, Result: ${lastResult === "" ? "Big" : "Small"}`;
-            }
-
-            inputField.value = ""; // Clear input after showing result
-        }
-
-        function clearHistory() {
-            document.getElementById('historyList').innerHTML = "";
-        }
-
-        function goToTelegram() {
-            window.location.href = "https://t.me/BADevilMods";
-        }
-
-        // Show dialog with dynamic message
-        function showDialog(message) {
-            document.getElementById('dialogMessage').textContent = message;
-            document.getElementById('dialog').style.display = 'block';
-        }
-
-        // Close dialog
-        function closeDialog() {
-            document.getElementById('dialog').style.display = 'none';
-        }
-
-        // Close dropdown if clicked outside
-        window.onclick = function (event) {
-            if (!event.target.matches('.dropdown-btn')) {
-                const dropdowns = document.getElementsByClassName("dropdown-list");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    if (dropdowns[i].classList.contains('show')) {
-                        dropdowns[i].classList.remove('show');
-                    }
-                }
-            }
-        };
-    </script>
 </body>
-</html>
+</html>.
